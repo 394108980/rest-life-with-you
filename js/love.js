@@ -18,10 +18,12 @@
         return z < 0;
     }
 
-    Point = function(x, y) {
+    // 定义canvas指针坐标
+    Point = function(x, y) { 
         this.x = x || 0;
         this.y = y || 0;
     }
+
     Point.prototype = {
         clone: function() {
             return new Point(this.x, this.y);
@@ -72,7 +74,7 @@
         }
     }
 
-    Seed = function(tree, point, scale, color) {
+    Seed = function(tree, point, scale, color, text) {
         this.tree = tree;
 
         var scale = scale || 1;
@@ -82,6 +84,7 @@
             point  : point,
             scale  : scale,
             color  : color,
+            text   : text,
             figure : new Heart(),
         }
 
@@ -133,27 +136,35 @@
                 var p = heart.figure.get(i, scale);
                 ctx.lineTo(p.x, -p.y);
             }
+            
             ctx.closePath();
             ctx.fill();
             ctx.restore();
-        },drawText: function() {
+        },
+        drawText: function() {
             var ctx = this.tree.ctx, heart = this.heart;
             var point = heart.point, color = heart.color, 
-                scale = heart.scale;
+                scale = heart.scale; text = heart.text;
+                
+            ctx.beginPath();
             ctx.save();
-            ctx.strokeStyle = color;
+            ctx.strokeStyle = '#ea98a6';
             ctx.fillStyle = color;
             ctx.translate(point.x, point.y);
             ctx.scale(scale, scale);
-            ctx.moveTo(0, 0);
-    	    ctx.lineTo(15, 15);
-    	    ctx.lineTo(200, 15);
+            ctx.moveTo(-60, -32);
+    	    ctx.lineTo(60, -32);
+    	    ctx.lineTo(-44, -26);
+    	    ctx.lineTo(36, -22);
+    	    ctx.lineTo(-20, -16);
+    	    ctx.lineTo(14, -16);
             ctx.stroke();
 
             ctx.moveTo(0, 0);
             ctx.scale(0.75, 0.75);
             ctx.font = "12px 微软雅黑,Verdana";
-			ctx.fillText(" Touch my heart, baby.........", 23, 10);
+            ctx.fillText(text , -78, -52);
+            
             ctx.restore();
         },
         drawCirle: function() {
@@ -175,12 +186,12 @@
             var ctx = this.tree.ctx, cirle = this.cirle;
             var point = cirle.point, scale = cirle.scale, radius = 26;
             var w = h = (radius * scale);
-            ctx.clearRect(point.x - w, point.y - h, 1100, 680);
+            ctx.clearRect(0, 0, 1100, 680);
         },
-        hover: function(x, y) {
+        hover: function(x, y) { // 通过判断当前鼠标位置，canvas是否有颜色，返回鼠标是否有hover
             var ctx = this.tree.ctx;
             var pixel = ctx.getImageData(x, y, 1, 1);
-            return pixel.data[3] == 255
+            return pixel.data[3] == 255 // 等于225时，该点颜色的透明度为255（完全不透明），表示鼠标点有绘画
         }
     }
 
@@ -216,6 +227,15 @@
         }
     }
 
+    
+    /**
+     * 动画绘制初始化方法
+     *
+     * @param {*} canvas canvas对象
+     * @param {*} width 画板宽度
+     * @param {*} height 画板高度
+     * @param {*} opt 画板配置项
+     */
     Tree = function(canvas, width, height, opt) {
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d');
@@ -238,8 +258,9 @@
             var point = new Point(x, y);
             var color = seed.color || '#FF0000';
             var scale = seed.scale || 1;
+            var text = seed.text || "Touch my heart, baby........."
 
-            this.seed = new Seed(this, point, scale, color);
+            this.seed = new Seed(this, point, scale, color, text);
         },
 
         initFooter: function() {
