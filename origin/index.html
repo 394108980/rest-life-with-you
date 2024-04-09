@@ -1,8 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>往后余生  我只要你</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+	<title>To：亲爱的王嘉悦</title>
 	<script type="text/javascript" src="js/jquery.min.js"></script>
 	<script type="text/javascript" src="js/jscex.min.js"></script>
 	<script type="text/javascript" src="js/jscex-parser.js"></script>
@@ -15,18 +16,17 @@
 　　<link rel="shortcut icon" href="images/love.ico"/>
 	<link rel="bookmark" href="/mages/love.ico"/>
     <style type="text/css">
-		body{margin:0;padding:0;background:#ffe;font-size:14px;font-family:'微软雅黑','宋体',sans-serif;color:#231F20;overflow:auto}
+		body{margin:0;padding:0;background:pink;font-size: 0;font-family:'微软雅黑','宋体',sans-serif;color:#231F20;overflow:auto}
 		a{color:#000;font-size:14px;}
-		#main{width:100%;}
-		#wrap{position:relative;margin:0 auto;width:1100px;height:680px;margin-top:10px;}
+		#main{width:100%;overflow: hidden;font-size:14px;}
+		#wrap{position:relative;margin:0 auto;width:100vw;height:100vh;}
 		#text{width:400px;height:425px;left:60px;top:80px;position:absolute;}
 		#code{display:none;font-size:16px;}
 		#clock-box{position:absolute;left:60px;top:550px;font-size:28px;display:none;}
 		#clock-box a{font-size:28px;text-decoration:none;}
 		#clock{margin-left:48px;}
 		#clock .digit{font-size:64px;}
-		#canvas{margin:0 auto;width:1100px;height:680px;}
-		#error{margin:0 auto;text-align:center;margin-top:60px;display:none;}
+		#error{margin:0 auto;text-align:center;display:none;}
 		.hand{cursor:pointer;}
 		.say{margin-left:5px;}
 		.space{margin-right:150px;}
@@ -36,72 +36,78 @@
 	<audio id="bgm" src="raw/love.mp3" type="audio/mpeg" loop="loop">无法加载BGM</audio>
 	<div id="main">
 		<div id="wrap">
-			<div id="text">
+			<div id="text" hidden>
 				<div id="code">
 					<font color="#FF0000">
-						<span class="say">一生有你的陪伴</span><br>
-						<span class="say"> </span><br>
+						<span class="say">遇见你，</span><br>
+						<span class="say">是我今生最大的幸运♥ </span><br>
 						<span class="say">便是最幸运的事</span><br>
-						<span class="say"> </span><br>
+						<span class="say"> 缘分是一个很奇妙的东西</span><br>
 						<span class="say">我要的不多</span><br>
-						<span class="say"> </span><br>
-						<span class="say">我只要你陪我一起走过剩下日子</span><br>
-						<span class="say"> </span><br>
-						<span class="say">我爱你</span><br>
-						<span class="say"> </span><br>
-						<span class="say">不是冲动而是真心喜欢</span><br>
-						<span class="say"> </span><br>
-						<span class="say">I love three things: the sun, the month and you.</span><br>
-						<span class="say"> </span><br>
+						<span class="say">突然有一天就降临在了咱俩身上 </span><br>
+						<span class="say">就像之前打喷嚏我会觉得我感冒了</span><br>
+						<span class="say">但现在我就觉得是你在想我，现在的状态刚刚好 </span><br>
+						<span class="say">但是这些我还不满足啊</span><br>
+						<span class="say">我还想，等以后我们见面了 </span><br>
+						<span class="say">想就这样牵着你手不放开，走过每一个春夏秋冬</span><br>
+						<span class="say">想每当你看剧时就一把抱住你，捏捏你的脸蛋</span><br>
+						<span class="say">想每天醒来的第一眼就看到睡得像头小猪的你</span><br>
+						<span class="say">想把你宠成小公主，做一个一直保护你的骑士</span><br>
+						<span class="say">亲爱的小王，我真的很喜欢你！</span><br>
+						<span class="say">想和你有很长的未来 </span><br>
+						<span class="say">我亲爱的小宝贝，我真的真的最最最最最喜欢你了！</span><br>
+						<span class="say">亲亲小王~ </span><br>
 					</font>
 				</div>
 			</div>
 			<div id="clock-box">
-				<span><font color="#666666">亲爱的，我们相识已经是</font></span>
+				<span><font color="#666666">即使未算上辈子，那小陈也已经守护小王</font></span>
 				<div id="clock"></div>
 			</div>
-			<canvas id="canvas" width="1100" height="680"></canvas>
+			<canvas id="canvas"></canvas>
 		</div>
 	</div>
 	<script>
-	var year = 2016;
-    var month = 2;
-    var day = 2;
-    var hour = 5;
-    var minute = 20;
+    // 配置项
+	var year = 2024;
+    var month = 1;
+    var day = 7;
+    var hour = 22;
+    var minute = 08;
     var second = 00;
-    var auto_load = true;
+    var auto_load = false; // 自动开始动画，方便调试时查看变化，设置成false则点击才开始
     var auto_load_delay = 1000;
 	(
 	function() {
     var canvas = $('#canvas');
 	var bgm = document.getElementById('bgm');
-    var width = canvas.width();
-    var height = canvas.height();
+    var width = document.body.clientWidth;
+    var height = document.body.clientHeight;
     canvas.attr("width", width);
     canvas.attr("height", height);
     var opts = {
         seed: {
-            x: width / 2 - 20,
+            x: width / 2, // 种子的中心点
             color: "rgb(190, 26, 37)",
-            scale: 2
+            scale: 2,
+            text: 'Touch My Heart Baby ....'
         },
-        branch: [[535, 680, 570, 250, 500, 200, 30, 100, [[540, 500, 455, 417, 340, 400, 13, 100, [[450, 435, 434, 430, 394, 395, 2, 40]]], [550, 445, 600, 356, 680, 345, 12, 100, [[578, 400, 648, 409, 661, 426, 3, 80]]], [539, 281, 537, 248, 534, 217, 3, 40], [546, 397, 413, 247, 328, 244, 9, 80, [[427, 286, 383, 253, 371, 205, 2, 40], [498, 345, 435, 315, 395, 330, 4, 60]]], [546, 357, 608, 252, 678, 221, 6, 100, [[590, 293, 646, 277, 648, 271, 2, 80]]]]]],
+        branch: caleBranch(),
         bloom: {
             num: 700,
-            width: 1080,
+            width: width,
             height: 650,
         },
         footer: {
-            width: 1200,
-            height: 5,
-            speed: 10,
+            width: width,
+            height: 12,
+            speed: 5,
         }
     };
-    var tree = new Tree(canvas[0], width, height, opts);
-    var seed = tree.seed;
-    var foot = tree.footer;
-    var hold = 1;
+    var tree = new Tree(canvas[0], width, height, opts); // 整个画板及其方法
+    var seed = tree.seed;   // 种子
+    var foot = tree.footer;  // 画板底部的横条
+    var hold = 1; // 是否等待
  
     canvas.click(function(e) {
         var offset = canvas.offset(),
@@ -109,7 +115,7 @@
         y;
         x = e.pageX - offset.left;
         y = e.pageY - offset.top;
-        if (seed.hover(x, y)) {
+        if (seed.hover(x, y)) { // 若点击在画板有填充的地方，执行
             hold = 0;
             canvas.unbind("click");
             canvas.unbind("mousemove");
@@ -124,6 +130,9 @@
         y = e.pageY - offset.top;
         canvas.toggleClass('hand', seed.hover(x, y));
     });
+
+
+    // 播种开始
     var seedAnimate = eval(Jscex.compile("async",
     function() {
         seed.draw();
@@ -143,6 +152,8 @@
             $await(Jscex.Async.sleep(10));
         }
     }));
+
+    // 生长开始
     var growAnimate = eval(Jscex.compile("async",
     function() {
         do {
@@ -150,6 +161,8 @@
             $await(Jscex.Async.sleep(10));
         } while ( tree . canGrow ());
     }));
+
+    // 开花开始
     var flowAnimate = eval(Jscex.compile("async",
     function() {
         do {
@@ -157,6 +170,8 @@
             $await(Jscex.Async.sleep(10));
         } while ( tree . canFlower ());
     }));
+
+    // 移动进场
     var moveAnimate = eval(Jscex.compile("async",
     function() {
         tree.snapshot("p1", 240, 0, 610, 680);
@@ -171,6 +186,8 @@
         $await(Jscex.Async.sleep(300));
         canvas.css("background", "none");
     }));
+
+
     var jumpAnimate = eval(Jscex.compile("async",
     function() {
         var ctx = tree.ctx;
@@ -181,6 +198,8 @@
             $await(Jscex.Async.sleep(25));
         }
     }));
+
+    // 文字输入
     var textAnimate = eval(Jscex.compile("async",
     function() {
         var together = new Date();
@@ -196,28 +215,52 @@
             $await(Jscex.Async.sleep(1000));
         }
     }));
+
+    // 自动播放背景音乐
 	document.addEventListener('DOMContentLoaded', function () {
-	  function audioAutoPlay() {
-		  bgm.play();
-		  document.addEventListener("WeixinJSBridgeReady", function () {
-			  bgm.play();
-		  }, false);
-	  }
-	  audioAutoPlay();
-	 });
+	    function audioAutoPlay() {
+		    bgm.play();
+		    document.addEventListener("WeixinJSBridgeReady", function () {
+			    bgm.play();
+		    }, false);
+	    }
+	    audioAutoPlay();
+    });
+     
+    // 执行动画
     var runAsync = eval(Jscex.compile("async",
     function() {
         $await(seedAnimate());
         $await(growAnimate());
-        $await(flowAnimate());
-        $await(moveAnimate());
-        textAnimate().start();
-        $await(jumpAnimate());
+        // $await(flowAnimate());
+        // $await(moveAnimate());
+        // textAnimate().start();
+        // $await(jumpAnimate());
     }));
     runAsync().start();
+
+    // primers 添加树枝自适应树算法
+    function caleBranch() {
+        var aaa = [[535, 680, 570, 250, 500, 200, 30, 100, [[540, 500, 455, 417, 340, 400, 13, 100, [[450, 435, 434, 430, 394, 395, 2, 40]]], [550, 445, 600, 356, 680, 345, 12, 100, [[578, 400, 648, 409, 661, 426, 3, 80]]], [539, 281, 537, 248, 534, 217, 3, 40], [546, 397, 413, 247, 328, 244, 9, 80, [[427, 286, 383, 253, 371, 205, 2, 40], [498, 345, 435, 315, 395, 330, 4, 60]]], [546, 357, 608, 252, 678, 221, 6, 100, [[590, 293, 646, 277, 648, 271, 2, 80]]]]]]
+        var c = width / 2  // 屏幕中心点
+        // 535
+        // return aaa
+        return [
+                    [c, 680, c+45, 250, c-35, 200, 30, 100, [
+                                [c+6, 281, c+2, 248, c+8, 217, 3, 40], // 树顶单支
+                                [c+14, 357, c+70, 255, c+150, 221, 6, 100, [    // 右侧上
+                                                [c+58, 293, c+110, 277, c+115, 271, 2, 80]]],
+                                [c+14, 397, c-110, 247, c-160, 260, 9, 80, [  // 左侧三叉
+                                                [c-90, 290, c-154, 230, c-160, 215, 2, 40],
+                                                [c-40, 340, c-100, 315, c-140, 330, 4, 60]]],
+                                [c+17, 445, c+65, 356, c+145, 345, 12, 100, [   // 右侧下
+                                                [c+45, 400, c+115, 409, c+125, 426, 3, 80]]],
+                                [c+8, 500, c-80, 400, c-180, 400, 13, 100, [  // 左侧双叉
+                                                [c-85, 423, c-100, 413, c-135, 380, 2, 40]]],
+                    ]],
+                ]
+    }
 })();
 	</script>
 </body>
 </html>
-
-
